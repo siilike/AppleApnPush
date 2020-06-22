@@ -15,8 +15,7 @@ namespace Apple\ApnPush\Jwt\SignatureGenerator;
 
 use Apple\ApnPush\Jwt\JwtInterface;
 use Jose\Component\Core\AlgorithmManager;
-use Jose\Component\Core\Converter\JsonConverter;
-use Jose\Component\Core\Converter\StandardConverter;
+use Jose\Component\Core\Util\JsonConverter;
 use Jose\Component\KeyManagement\JWKFactory;
 use Jose\Component\Signature\Algorithm\ES256;
 use Jose\Component\Signature\JWSBuilder;
@@ -53,8 +52,8 @@ class WebTokenJwtSignatureGenerator implements SignatureGeneratorInterface
      */
     public function __construct()
     {
-        $this->jsonConverter = new StandardConverter();
-        $this->jwsBuilder = new JWSBuilder($this->jsonConverter, AlgorithmManager::create([new ES256()]));
+        $this->jsonConverter = new JsonConverter();
+        $this->jwsBuilder = new JWSBuilder(new AlgorithmManager([new ES256()]));
         $this->serializer = new CompactSerializer($this->jsonConverter);
     }
 
